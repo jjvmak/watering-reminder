@@ -13,13 +13,20 @@ import java.util.*
 val DATABASE_NAME ="DB"
 val TABLE_NAME="WateringDates"
 val COL_DATE = "Date"
+val COL_ID = "ID"
+val COL_NDATE = "NDate"
+val COL_NAME = "Name"
+
 
 class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABASE_NAME,null,1) {
 
     @TargetApi(23)
     override fun onCreate(db: SQLiteDatabase?) {
         val createTable = "CREATE TABLE " + TABLE_NAME +" (" +
-                COL_DATE +"  VARCHAR(256))"
+                COL_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                COL_NAME+ " VARCHAR(256),"+
+                COL_NDATE+ " VARCHAR(256),"+
+                COL_DATE +" VARCHAR(256))"
 
         db?.execSQL(createTable)
 

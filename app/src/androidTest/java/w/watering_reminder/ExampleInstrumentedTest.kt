@@ -1,4 +1,4 @@
-package w.watering_remainder
+package w.watering_reminder
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

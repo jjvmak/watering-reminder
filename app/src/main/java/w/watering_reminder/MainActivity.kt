@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
-import w.watering_remainder.R
 import java.util.*
 import java.text.SimpleDateFormat
 
