@@ -1,28 +1,43 @@
 package w.watering_reminder
 
 import android.annotation.TargetApi
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import java.text.SimpleDateFormat
 
 import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
 
+
     var db = DatabaseHandler(this)
+
 
     @TargetApi(23)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initInfo()
 
-        waterButton.setOnClickListener({
+       // db.insertPlant("KUSILUIKKU")
+
+        var list : MutableList<Plant> = ArrayList()
+        list = db.readData()
+
+
+        for (plant in list) {
+            Log.v("SAATANA", plant.name +" "+plant.id)
+        }
+
+
+
+       // initInfo()
+
+        /*waterButton.setOnClickListener({
             val currentTime = Calendar.getInstance()
             val time = SimpleDateFormat("yyyy-MM-dd'-'kk:mm").format(currentTime.getTime())
 
@@ -33,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             Log.v("SAATANA",""+ list.size)
 
             if (list.size < 1) {
-                db.insertData(time)
+                db.insertPlant(time)
                 initInfo()
             }
 
@@ -43,12 +58,19 @@ class MainActivity : AppCompatActivity() {
             }
 
 
+        })*/
+
+        addPlant.setOnClickListener({
+            val inputIntent = Intent(applicationContext, InputActivity::class.java)
+            startActivity(inputIntent)
+
         })
+
 
     }
 
     @TargetApi(23)
-    fun initInfo() {
+   /* fun initInfo() {
         var list : MutableList<Date> = ArrayList()
         list = db.readData()
 
@@ -81,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
         //infoText.text = sdf.format(list.get(list.size-1))
 
-    }
+    }*/
 
     fun getDateDiff(date1: Date, date2: Date, timeUnit: TimeUnit): Long {
         val diffInMillies = date2.time - date1.time

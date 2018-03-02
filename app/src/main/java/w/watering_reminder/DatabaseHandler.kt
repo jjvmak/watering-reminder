@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 val DATABASE_NAME ="DB"
@@ -19,6 +18,7 @@ val COL_NAME = "Name"
 
 
 class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABASE_NAME,null,1) {
+
 
     @TargetApi(23)
     override fun onCreate(db: SQLiteDatabase?) {
@@ -33,15 +33,21 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
     }
 
     @TargetApi(23)
+    fun drop(){
+        val db = this.writableDatabase
+        db?.execSQL("DROP TABLE "+ TABLE_NAME)
+    }
+
+    @TargetApi(23)
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     @TargetApi(23)
-    fun insertData(date : String){
+    fun insertPlant(plantName : String){
         val db = this.writableDatabase
         var cv = ContentValues()
-        cv.put(COL_DATE,date)
+        cv.put(COL_NAME,plantName)
         var result = db.insert(TABLE_NAME,null,cv)
         if(result == (-1).toLong())
             Toast.makeText(context,"Failed", Toast.LENGTH_SHORT).show()
@@ -50,9 +56,12 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
 
     }
 
+
+
+
     @TargetApi(23)
-    fun readData() : MutableList<Date>{
-        var list : MutableList<Date> = ArrayList()
+    fun readData() : MutableList<Plant>{
+        var list : MutableList<Plant> = ArrayList()
         val db = this.readableDatabase
         val query = "Select * from " + TABLE_NAME
         val result = db.rawQuery(query,null)
@@ -60,14 +69,17 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
 
         if(result.moveToFirst()){
             do {
-                var d = result.getString(result.getColumnIndex(COL_DATE))
-                val date = sdf.parse(d)
+                //var d = result.getString(result.getColumnIndex(COL_DATE))
+                //val date = sdf.parse(d)
                 //Log.v("SAATANA",sdf.format(date))
 
+                var plant = Plant()
+                plant.name = result.getString(result.getColumnIndex(COL_NAME))
+                plant.id = result.getInt(result.getColumnIndex(COL_ID))
 
 
 
-                list.add(date)
+                list.add(plant)
 
             }while (result.moveToNext())
         }
