@@ -66,6 +66,12 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+        listButton.setOnClickListener({
+            val inputIntent = Intent(applicationContext, PlantList::class.java)
+            startActivity(inputIntent)
+
+        })
+
 
     }
 
