@@ -1,4 +1,4 @@
-package navi.hemppa
+package w.watering_reminder
 
 import org.junit.Test
 

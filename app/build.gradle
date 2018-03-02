@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "navi.hemppa"
+        applicationId "w.watering_remainder"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
