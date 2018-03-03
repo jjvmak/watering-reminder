@@ -1,5 +1,6 @@
 package w.watering_reminder
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -32,13 +33,29 @@ class PlantList : AppCompatActivity() {
         plants.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
             val selectedItem = parent.getItemAtPosition(position) as String
-            Log.v("SAATANA", selectedItem)
 
+            var plant = Plant()
+            plant = db.getPlantInstance(selectedItem)
+
+            Log.v("SAATANA", plant.name +" "+plant.date)
+
+            val inputIntent = Intent(applicationContext, PlantActivity::class.java)
+            inputIntent.putExtra("plantInfo", (plant.name))
+            startActivity(inputIntent)
+            this.finish()
 
 
         }
 
 
+
+
+
+    }
+
+    override fun onBackPressed() {
+
+        this.finish()
     }
 
 

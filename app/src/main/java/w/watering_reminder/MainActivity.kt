@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
 
         for (plant in list) {
-            Log.v("SAATANA", plant.name +" "+plant.id)
+            Log.v("SAATANA", plant.name +" "+plant.date)
         }
 
 
@@ -114,5 +114,10 @@ class MainActivity : AppCompatActivity() {
     fun getDateDiff(date1: Date, date2: Date, timeUnit: TimeUnit): Long {
         val diffInMillies = date2.time - date1.time
         return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS)
+    }
+
+    override fun onBackPressed() {
+
+        this.finish()
     }
 }

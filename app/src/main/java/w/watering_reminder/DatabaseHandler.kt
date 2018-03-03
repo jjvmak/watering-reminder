@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,6 +49,8 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
         val db = this.writableDatabase
         var cv = ContentValues()
         cv.put(COL_NAME,plantName)
+        cv.put(COL_DATE,"2000-02-02-02:02")
+        cv.put(COL_NDATE,"2000-02-02-02:02")
         var result = db.insert(TABLE_NAME,null,cv)
         if(result == (-1).toLong())
             Toast.makeText(context,"Failed", Toast.LENGTH_SHORT).show()
@@ -76,8 +79,8 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
                 var plant = Plant()
                 plant.name = result.getString(result.getColumnIndex(COL_NAME))
                 plant.id = result.getInt(result.getColumnIndex(COL_ID))
-
-
+                plant.date = result.getString(result.getColumnIndex(COL_DATE))
+                plant.nDate = result.getString(result.getColumnIndex(COL_NDATE))
 
                 list.add(plant)
 
@@ -91,16 +94,50 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
     }
 
     @TargetApi(23)
+    fun getPlantInstance(name : String) : Plant {
+
+        val db = this.readableDatabase
+        val query = "SELECT * FROM " + TABLE_NAME + " WHERE "+ COL_NAME +" = '"+name+"'"
+        val result = db.rawQuery(query,null)
+        var plant = Plant()
+        if(result.moveToFirst()){
+            do {
+
+                plant.name = result.getString(result.getColumnIndex(COL_NAME))
+                plant.id = result.getInt(result.getColumnIndex(COL_ID))
+                plant.date = result.getString(result.getColumnIndex(COL_DATE))
+                plant.nDate = result.getString(result.getColumnIndex(COL_NDATE))
+
+
+            }while (result.moveToNext())
+        }
+
+        result.close()
+        db.close()
+
+        return plant
+
+    }
+
+    @TargetApi(23)
     fun deleteData(){
         val db = this.writableDatabase
         db.delete(TABLE_NAME,null,null)
         db.close()
     }
 
+
     @TargetApi(23)
-    fun updateData(date : String) {
+    fun deletePlant(name : String){
         val db = this.writableDatabase
-        val query = "Select * from " + TABLE_NAME
+        db.delete(TABLE_NAME, COL_NAME+" = ?", arrayOf(name))
+        db.close()
+    }
+
+    @TargetApi(23)
+    fun updateData(date : String, name: String) {
+        val db = this.writableDatabase
+        val query = "SELECT * FROM " + TABLE_NAME + " WHERE "+ COL_NAME +" = '"+name+"'"
         val result = db.rawQuery(query,null)
         if(result.moveToFirst()){
             do {
