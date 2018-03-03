@@ -137,19 +137,11 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
     @TargetApi(23)
     fun updateData(date : String, name: String) {
         val db = this.writableDatabase
-        val query = "SELECT * FROM " + TABLE_NAME + " WHERE "+ COL_NAME +" = '"+name+"'"
-        val result = db.rawQuery(query,null)
-        if(result.moveToFirst()){
-            do {
-                var cv = ContentValues()
-                cv.put(COL_DATE, date)
-                db.update(TABLE_NAME,cv, COL_DATE + "=?",
-                        arrayOf(result.getString(result.getColumnIndex(COL_DATE))))
-            }while (result.moveToNext())
-        }
-
-        result.close()
+        var cv = ContentValues()
+        cv.put(COL_DATE, date)
+        db.update(TABLE_NAME, cv, COL_NAME+" = ?", arrayOf(name))
         db.close()
+
     }
 
 }

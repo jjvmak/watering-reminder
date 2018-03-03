@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit
 import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AlertDialog
+import android.util.Log
 
 
 class PlantActivity : AppCompatActivity() {
@@ -34,6 +35,7 @@ class PlantActivity : AppCompatActivity() {
             val time = SimpleDateFormat("yyyy-MM-dd'-'kk:mm").format(currentTime.getTime())
 
             db.updateData(time, plant.name)
+            Log.v("mita", "päivitä: "+plant.name)
             initInfo()
         })
 
@@ -81,6 +83,14 @@ class PlantActivity : AppCompatActivity() {
 
         else {
             infoText.text = "Kasteltu viimeksi "+diff+" päivää sitten"
+        }
+
+        var list : MutableList<Plant> = ArrayList()
+        list = db.readData()
+
+
+        for (plant in list) {
+            Log.v("mita", plant.name +" "+plant.date)
         }
 
     }
