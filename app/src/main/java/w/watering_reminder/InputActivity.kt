@@ -19,13 +19,16 @@ class InputActivity : AppCompatActivity() {
             val plantName : String = editText.text.toString()
             editText.setText("")
             Log.v("SAATANA", "added: "+plantName)
-            db.insertPlant(plantName)
-            var list : MutableList<Plant> = ArrayList()
-            list = db.readData()
-
-            for (plant in list) {
-                Log.v("SAATANA", plant.name +" "+plant.id)
+            if(plantName.isNotEmpty()) {
+                db.insertPlant(plantName)
             }
+
+            //var list : MutableList<Plant> = ArrayList()
+            //list = db.readData()
+
+            /*for (plant in list) {
+                Log.v("SAATANA", plant.name +" "+plant.id)
+            }*/
 
 
 

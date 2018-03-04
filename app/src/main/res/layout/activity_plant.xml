@@ -11,17 +11,40 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
-
-        <TextView
-            android:id="@+id/nameText"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="30sp" />
+            android:layout_height="250dp"
+            android:background="@drawable/lehtibanner">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/bannerText"
+                android:text="Watering Reminder"
+                android:textAlignment="center"
+                android:textColor="@color/transpText"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="44dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/trashcanicon" />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/infoText"
@@ -31,27 +54,28 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="75dp"
             android:textAlignment="center"
-            android:textSize="24sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/waterButton"
             style="@style/Widget.AppCompat.Button"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="60dp"
-            android:background="@drawable/waterdrop"/>
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="18dp"
+            android:layout_marginStart="60dp"
+            android:background="@drawable/waterdrop" />
 
         <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/nameText"
-            android:layout_alignBottom="@+id/nameText"
+            android:id="@+id/nutrientbutton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="11dp"
-            android:text="DELETE" />
+
+            android:layout_below="@+id/infoText"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/nutrientdrop" />
 
 
     </RelativeLayout>

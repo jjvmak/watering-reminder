@@ -18,24 +18,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/lehtibanner"
+            android:id="@+id/relativeLayout">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/bannerText"
+                android:text="Lisää uusi"
+                android:textAlignment="center"
+                android:textColor="@color/transpText"
+                android:textSize="30sp" />
+
+        </RelativeLayout>
+
         <EditText
             android:id="@+id/editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_above="@+id/button"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="83dp"
+            android:layout_marginBottom="15dp"
             android:ems="10"
-            android:hint="Name"
+            android:hint="Nimi"
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editText"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="18dp"
-            android:text="Add" />
+            android:layout_marginBottom="56dp"
+            android:background="@drawable/plusicon" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

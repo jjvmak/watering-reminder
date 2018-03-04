@@ -11,6 +11,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.widget.Toast
 
 
 class PlantActivity : AppCompatActivity() {
@@ -37,6 +38,17 @@ class PlantActivity : AppCompatActivity() {
             db.updateData(time, plant.name)
             Log.v("mita", "päivitä: "+plant.name)
             initInfo()
+            Toast.makeText(this,"Kasteltu!", Toast.LENGTH_SHORT).show()
+        })
+
+        nutrientbutton.setOnClickListener({
+            val currentTime = Calendar.getInstance()
+            val time = SimpleDateFormat("yyyy-MM-dd'-'kk:mm").format(currentTime.getTime())
+
+            db.updateNutrient(time, plant.name)
+            Log.v("mita", "päivitä: "+plant.name)
+            initInfo()
+            Toast.makeText(this,"Ravinteet annettu!", Toast.LENGTH_SHORT).show()
         })
 
         deleteButton.setOnClickListener({
@@ -56,8 +68,8 @@ class PlantActivity : AppCompatActivity() {
 
             }
             val ab = AlertDialog.Builder(this)
-            ab.setMessage("Are you sure to delete?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show()
+            ab.setMessage("Haluatko varmasti poistaa?").setPositiveButton("Kyllä", dialogClickListener)
+                    .setNegativeButton("Ei", dialogClickListener).show()
         })
 
 
@@ -66,7 +78,7 @@ class PlantActivity : AppCompatActivity() {
 
     fun initInfo() {
         plant = db.getPlantInstance(plantName)
-        nameText.text = plant.name
+        textView.text = plant.name
 
         val currentTime = Calendar.getInstance()
         val time = SimpleDateFormat("yyyy-MM-dd'-'kk:mm").format(currentTime.getTime())
@@ -74,24 +86,31 @@ class PlantActivity : AppCompatActivity() {
 
         val date1 = sdf.parse(time)
         val date2 = sdf.parse(plant.date)
+        val date3 = sdf.parse(plant.nDate)
 
         val diff = getDateDiff(date1, date2, TimeUnit.DAYS)
+        val ndiff = getDateDiff(date1, date3, TimeUnit.DAYS)
 
         if (diff > 100) {
             infoText.text = "Aloita kastelu."
         }
 
-        else {
-            infoText.text = "Kasteltu viimeksi "+diff+" päivää sitten"
+        else if(ndiff > 100) {
+            infoText.text = "Kasteltu viimeksi "+diff+" päivää sitten."
         }
 
-        var list : MutableList<Plant> = ArrayList()
+        else {
+            infoText.text = "Kasteltu viimeksi "+diff+" päivää sitten.\n"+""+
+                            "Ravinteet annettu viimeksi "+ndiff+" päivää sitten."
+        }
+
+       /* var list : MutableList<Plant> = ArrayList()
         list = db.readData()
 
 
         for (plant in list) {
             Log.v("mita", plant.name +" "+plant.date)
-        }
+        }*/
 
     }
 

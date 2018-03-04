@@ -53,9 +53,9 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
         cv.put(COL_NDATE,"2000-02-02-02:02")
         var result = db.insert(TABLE_NAME,null,cv)
         if(result == (-1).toLong())
-            Toast.makeText(context,"Failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Tietokanta virhe!", Toast.LENGTH_SHORT).show()
         else
-            Toast.makeText(context,"Success", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Lisätty!", Toast.LENGTH_SHORT).show()
 
     }
 
@@ -139,6 +139,16 @@ class DatabaseHandler(var context : Context) :  SQLiteOpenHelper(context, DATABA
         val db = this.writableDatabase
         var cv = ContentValues()
         cv.put(COL_DATE, date)
+        db.update(TABLE_NAME, cv, COL_NAME+" = ?", arrayOf(name))
+        db.close()
+
+    }
+
+    @TargetApi(23)
+    fun updateNutrient(date : String, name: String) {
+        val db = this.writableDatabase
+        var cv = ContentValues()
+        cv.put(COL_NDATE, date)
         db.update(TABLE_NAME, cv, COL_NAME+" = ?", arrayOf(name))
         db.close()
 
